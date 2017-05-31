@@ -122,3 +122,13 @@ WantedBy=multi-user.target`
 `/usr/local/nginx/sbin/nginx –s stop` Before you use the systemctl commands to start nginx, make sure nginx is not running already from the last exercise.  
 
 ## Topic 3 (File Systems)
+`fdisk -l` View existing partitions  
+To create a new partition on the hard disk, type "fdisk /dev/sda".  
+* In fdisk, type 'm' to view the available options.  
+* Type “p” to list the existing partitions on the hard disk.  
+* To create a new partition, type 'n'.  
+* Type 'p' to create a third primary partition. (as you already have 2 partitions)  
+* Type “3” for Partition number 3.  
+* Press enter to accept the default starting sector.  
+* Type “+100M” to create a 100MB partition.  
+* Type 'p' to list the partition info. Note your third partition and its device name (/dev/sda3). Also note its ID, which is 83 for Linux.  Type 'w' to write changes to disk and exit fdisk  
