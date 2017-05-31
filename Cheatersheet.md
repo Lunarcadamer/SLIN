@@ -71,11 +71,11 @@ Uncomment `anon_upload_enable=YES` to allow anonymous uploads
 ## Topic 2
 
 ### Apache Configuration
-`/etc/httpd/conf/httpd.conf` Apache Config file 
+`/etc/httpd/conf/httpd.conf` Apache Config file  
 `<Directory /var/www/html/books>
     Options -Indexes
-    </Directory>
-    `
+ </Directory>  
+`
 Turning off Indexes  
 
 ### Virtual Hosts
