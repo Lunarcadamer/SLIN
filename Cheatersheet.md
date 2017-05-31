@@ -122,6 +122,8 @@ WantedBy=multi-user.target`
 `/usr/local/nginx/sbin/nginx –s stop` Before you use the systemctl commands to start nginx, make sure nginx is not running already from the last exercise.  
 
 ## Topic 3 (File Systems)
+
+### Partition Creation
 `fdisk -l` View existing partitions  
 To create a new partition on the hard disk, type "fdisk /dev/sda".  
 * In fdisk, type 'm' to view the available options.  
@@ -132,3 +134,24 @@ To create a new partition on the hard disk, type "fdisk /dev/sda".
 * Press enter to accept the default starting sector.  
 * Type “+100M” to create a 100MB partition.  
 * Type 'p' to list the partition info. Note your third partition and its device name (/dev/sda3). Also note its ID, which is 83 for Linux.  Type 'w' to write changes to disk and exit fdisk  
+
+### Formating Partition & Mount on boot (Section 1b)
+`/etc/fstab` Modify for mounting during boot  
+
+### Mounting directories on server (Section 2)
+Check nfs-server service  
+`mkdir -p /exports/data`  
+`chmod 777 /exports/data`  
+Edit /etc/exports, add line: `/exports/data     <clientIP>(ro,sync)`  
+`exportfs -r` Re-export entries in /etc/exports  
+`exportfs -v` Checking exports  
+
+### Mounting directories on client (Section 3)
+`mount <serverIP>:/exports/data /mount/data -o rw`  
+
+### Export options (Section 4)
+Edit /etc/exports on server, add line `/exports/data		<clientIP>(rw,root_squash,sync)`  
+
+Note that files created by root over the NFS share are owned by nfsnobody. This is because by default, directories are exported with the root_squash option. The user root is mapped to user nfsnobody when accessing the exported directory.  
+
+### Linux File Permissions and NFS (Section 5)
