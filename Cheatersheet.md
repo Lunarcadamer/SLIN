@@ -94,7 +94,29 @@ print “Hello World”;
 `  
 `chmod 755 /var/www/fruits-cgi-bin/test.pl`  
 
-### User Authentication
+### User Authentication (Section 8)
 `htpasswd –cm /etc/httpd/conf/flowers-users bob`  
 `htpasswd –m /etc/httpd/conf/flowers-users alice` -c option not used, only first entry requires it  
 
+### Tomcat (Section 12)
+`/var/lib/tomcat/webapps` Tomcat directory  
+
+### nginx (Section 14)
+Create the text file /usr/lib/systemd/system/nginx.service and enter the following contents.
+`[Unit]
+Description=The NGINX HTTP server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/usr/local/nginx/logs/nginx.pid
+ExecStartPre=/usr/local/nginx/sbin/nginx -t
+ExecStart=/usr/local/nginx/sbin/nginx
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target`  
+
+`/usr/local/nginx/sbin/nginx –s stop` Before you use the systemctl commands to start nginx, make sure nginx is not running already from the last exercise.  
