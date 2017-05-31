@@ -1,6 +1,6 @@
 # SLIN Cheatsheet
 
-## Topic 0
+## Topic 0 (Linux Basics)
 
 ### Check hostname
 `hostnamectl`  
@@ -15,7 +15,7 @@
 `usermod -aG <groupname> <username>` -aG = append to group  
 `chgrp <groupname> <filename>` To change group owner of file  
 
-## Topic 1
+## Topic 1 (Using Cent0S)
 
 ### SSH Configurations
 `netstat -tunap | grep <service name>` Use netstat to check which port a service is running on  
@@ -68,7 +68,7 @@ Edit `/etc/selinux/config` to set mode on bootup
 `chmod 730 /var/ftp/incoming`  
 Uncomment `anon_upload_enable=YES` to allow anonymous uploads  
 
-## Topic 2
+## Topic 2 (Web Servers)
 
 ### Apache Configuration
 `/etc/httpd/conf/httpd.conf` Apache Config file  
@@ -121,4 +121,4 @@ WantedBy=multi-user.target`
 
 `/usr/local/nginx/sbin/nginx –s stop` Before you use the systemctl commands to start nginx, make sure nginx is not running already from the last exercise.  
 
-## Topic 3
+## Topic 3 (File Systems)
