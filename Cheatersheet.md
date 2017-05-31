@@ -187,13 +187,13 @@ Check the contents of /mount/data to see if the server’s exported directory ha
 ## Topic 4 (Network and Service Access Controls)
 
 ### Firewall commands
-`firewall-cmd –-get-zones`  
-`firewall-cmd –-list-all-zones`  
-`firewall-cmd –-get–default-zone`  
-`firewall-cmd –-list-services`  
-`firewall-cmd --permanent --zone=public --remove-service=telnet`  
-`firewall-cmd --reload`  
-`firewall-cmd --permanent --zone=public --add-rich-rule=‘rule family=ipv4 service name=ftp source address=192.168.94.0/24 accept’`
+`firewall-cmd –-get-zones` Lists the firewall zones  
+`firewall-cmd –-list-all-zones` Lists the firewall zones  
+`firewall-cmd –-get–default-zone` View the default zone  
+`firewall-cmd –-list-services` List services that are currently allowed  
+`firewall-cmd --permanent --zone=public --remove-service=telnet` Permanently remove telnet from public zone  
+`firewall-cmd --reload` Reloading the fire wall  
+`firewall-cmd --permanent --zone=public --add-rich-rule=‘rule family=ipv4 service name=ftp source address=192.168.94.0/24 accept’` How to add a rich rule  
 
 
 ### Firewall files
