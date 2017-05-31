@@ -155,3 +155,23 @@ Edit /etc/exports on server, add line `/exports/data		<clientIP>(rw,root_squash,
 Note that files created by root over the NFS share are owned by nfsnobody. This is because by default, directories are exported with the root_squash option. The user root is mapped to user nfsnobody when accessing the exported directory.  
 
 ### Linux File Permissions and NFS (Section 5)
+`mkdir /exports/data/student`  
+`chown student.student /exports/data/student`  
+`chmod 755 /exports/data/student`  
+
+### Viewing exported directories by mounting pseudo-root (Section 6)
+On server: Create another directory /exports2/mydata.  
+`mkdir –p /exports2/mydata`  
+Create some files in /exports2/mydata.  
+Edit /etc/exports and add the following line.  
+`/exports2/mydata		*(ro,sync)`  
+Run exportfs with -r option to re-export the entries in /etc/exports.  
+`exportfs -r`  
+  
+On client: Run the following command to mount the pseudo-root of the server to /mount.  
+`mount serverIP:/ /mount`  
+Do a ls of /mount to find out what has been exported from the server.  
+`ls /mount`  
+To unmount the directory  
+`umount /mount`  
+
