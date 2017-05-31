@@ -175,3 +175,11 @@ Do a ls of /mount to find out what has been exported from the server.
 To unmount the directory  
 `umount /mount`  
 
+### Mount on bootup with /etc/fstab (Section 7)
+On client: Append the following line in /etc/fstab so that the /mount/data will be mounted automatically upon every bootup.  
+`serverIP:/exports/data	  /mount/data    nfs   defaults   0 0`  
+Restart the client or run the following command to mount the /mount/data.  
+`mount /mount/data`  
+Check the contents of /mount/data to see if the server’s exported directory has been mounted.  
+`ls /mount/data`  
+`When you have completed the test, you can comment out the line that you just added to /etc/fstab so that it would not be automatically the next time you start your Linux client.`  
