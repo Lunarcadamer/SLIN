@@ -102,7 +102,7 @@ print “Hello World”;
 `/var/lib/tomcat/webapps` Tomcat directory  
 
 ### nginx (Section 14)
-Create the text file /usr/lib/systemd/system/nginx.service and enter the following contents.
+Create the text file /usr/lib/systemd/system/nginx.service and enter the following contents.  
 `[Unit]
 Description=The NGINX HTTP server
 After=syslog.target network.target remote-fs.target nss-lookup.target
