@@ -183,3 +183,5 @@ Restart the client or run the following command to mount the /mount/data.
 Check the contents of /mount/data to see if the server’s exported directory has been mounted.  
 `ls /mount/data`  
 `When you have completed the test, you can comment out the line that you just added to /etc/fstab so that it would not be automatically the next time you start your Linux client.`  
+
+## Topic 4 (Network and Service Access Controls)
