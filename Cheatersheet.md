@@ -428,7 +428,38 @@ Refer to tutorial 6, section 13
 
 ## Topic 7 (System Monitoring)
 
+### Using netstat and nmap
+`netstat -tunpl` To see what ports are open  
+`nmap <serverIP>` to see what ports can be detected
 
+### Packet Sniffers: tcpdump and Wireshark
+`tcpdump -i <interfaceName>` to run tcpdump and capture packets  
+`tcpdump icmp -i <interfaceName>` to see only ICMP packets  
+`tcpdump tcp -i <interfaceName>` to see only TCP packets
+
+### System Logging (Section 3)
+Doesn't seem too important, refer to tutorial for more info.
+
+`var/log/secure` contains authpriv messages  
+`/etc/rsyslog.conf` Config file for system logging
+
+Edit /etc/rsyslog.conf to add the following line in bold under the authpriv line. This means authpriv messages with priority warning and higher will also be logged to the file /var/log/securewarning.
+`authpriv.*	/var/log/secure`  
+`authpriv.warning	/var/log/securewarning`
+
+
+### Remote Logging (Section 4)
+Doesn't seem too important, refer to tutorial for more info.
+**On Client**  
+Edit /etc/rsyslog.conf  
+`authpriv.warning	@<serverIP>` to send logs to the server as well
+
+### Resolving IP Addresses in Apache Logs
+`ls /var/log/httpd` Apache log files  
+`logresolve < /var/log/httpd/access_log > /tmp/apachelog` Resolve the IP Addr and stores the output into a file
+
+### Webalizer for Apache (Section 6)
+Doesn't seem too important, refer to tutorial for more info.
 
 # Mock Test Paper for Reference
 Suggested solutions for SLIN Revision Questions for End of Semester Practical Test
