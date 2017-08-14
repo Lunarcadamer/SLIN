@@ -431,17 +431,16 @@ Refer to tutorial 6, section 13
 ## Mock Test Paper for Reference
 Suggested solutions for SLIN Revision Questions for End of Semester Practical Test
 
-Important : Know how to access the various man pages for more help. Apache web server has its Apache manual website that can be installed.
+**Important : Know how to access the various man pages for more help. Apache web server has its Apache manual website that can be installed.**
 
-1.	Using GUI : Click on the Network icon in top right corner, and go to Network Settings. For Wired Connection, click on the Gear icon in bottom right corner. In the left hand pane, select IPv4. Select Manual and set the IP address, subnet mask, gateway and the DNS Server.
-2.	
-Alternatively, edit the network config file /etc/sysconfig/network-scripts/ifcfg-eno16777736 and specify the BOOTPROTO, IPADDR, NETMASK, GATEWAY and DNS1.
+1. Using GUI : Click on the Network icon in top right corner, and go to Network Settings. For Wired Connection, click on the Gear icon in bottom right corner. In the left hand pane, select IPv4. Select Manual and set the IP address, subnet mask, gateway and the DNS Server.  
+2. Alternatively, edit the network config file /etc/sysconfig/network-scripts/ifcfg-eno16777736 and specify the BOOTPROTO, IPADDR, NETMASK, GATEWAY and DNS1.
 
 You may need to restart the network for changes to take effect  
 `systemctl status network`
 
 
-3.	To create users and set their passwords
+## 3. To create users and set their passwords
 
 `useradd tan`  
 `useradd wong`  
@@ -451,54 +450,54 @@ You may need to restart the network for changes to take effect
 `passwd lee`  
 
 
-4.	Groups  
-(i)	To create group  
+## 4. Groups  
+(i) To create group  
 `groupadd staff`
 
-(ii)	To add users as secondary members of a group  
+(ii) To add users as secondary members of a group  
 `usermod -aG staff tan`  
 `usermod -aG staff wong`  
 
 
-5.	SELinux  
+## 5. SELinux  
 Edit /etc/selinux/config and set the following :  
 `SELINUX=enforcing`  
 
 
 
-6.	Telnet Service  
-(i)	Install xinetd and telnet-server and make xinetd start automatically upon next bootup  
+## 6. Telnet Service  
+(i) Install xinetd and telnet-server and make xinetd start automatically upon next bootup  
 `yum install xinetd`  
 `yum install telnet-server`	not yum install telnet (this is telnet client)  
 `chkconfig xinetd on`  
 
-(ii)	Enable telnet-server to be started when there is a client request:  
+(ii) Enable telnet-server to be started when there is a client request:  
 `chkconfig telnet on`
 
-(iii)	To configure telnet service to be available only to certain clients, edit /etc/xinetd.d/telnet and add in the following line:  
+(iii) To configure telnet service to be available only to certain clients, edit /etc/xinetd.d/telnet and add in the following line:  
 `only_from   = 192.168.0.0/16`
 
-(iv)	To start xinetd now:  
+(iv) To start xinetd now:  
 `service xinetd start`
 
 
-7.	Symmetric Encryption  
-(i)	Create the file /tmp/myfile using any editor
+## 7. Symmetric Encryption  
+(i) Create the file /tmp/myfile using any editor
 
-(ii)	Encrypt the file /tmp/myfile with Triple-DES, using “hello” as the encryption key and store the encrypted output to /tmp/encrypted
+(ii) Encrypt the file /tmp/myfile with Triple-DES, using “hello” as the encryption key and store the encrypted output to /tmp/encrypted
 `openssl des3 –in /tmp/myfile –out /tmp/encrypted`  
 (Enter “hello” when asked for encrypted password)
 
-(iii)	Decrypt the file /tmp/encrypted with Triple-DES, using “hello” as the encryption key and store the decrypted output to /tmp/decrypted
+(iii) Decrypt the file /tmp/encrypted with Triple-DES, using “hello” as the encryption key and store the decrypted output to /tmp/decrypted
 `openssl des3 –d –in /tmp/encrypted –out /tmp/decrypted`  
 (Enter “hello” when asked for encrypted password)
 
-(iv)	Check that /tmp/decrypted contains the original string “Good morning to all!”
+(iv) Check that /tmp/decrypted contains the original string “Good morning to all!”
 
 
 
-8.	Asymmetric Encryption
-(i)	As user tan, do the following to generate a pair of private and public keys :  
+## 8. Asymmetric Encryption
+(i) As user tan, do the following to generate a pair of private and public keys :  
 Login to the GUI as user tan.  
 `gpg --gen-key (choose the default options and enter “JohnTan” as the Real name.`
 
@@ -506,26 +505,26 @@ To check that the keys have been created, run the following commands to list out
 `gpg --list-secret-keys`  
 `gpg --list-keys`  
 
-(ii)	Create the file /home/tan/tanfile using any editor.
+(ii) Create the file /home/tan/tanfile using any editor.
 
-(iii)	Create a detached signature. The signature will be stored in the same directory as either tanfile.asc or tanfile.sig  
+(iii) Create a detached signature. The signature will be stored in the same directory as either tanfile.asc or tanfile.sig  
 `gpg --detach-sign –a /home/tan/tanfile`
 
-(iv)	Verify the detached signature. You should see “Good signature”  
+(iv) Verify the detached signature. You should see “Good signature”  
 `gpg --verify /home/tan/tanfile.asc`  
 
-(v)	Export tan’s public key into a file  
+(v) Export tan’s public key into a file  
 `gpg --export –a > /tmp/tan_publickey`
 
-(vi)	As user wong, import tan’s public key from a file  
+(vi) As user wong, import tan’s public key from a file  
 `gpg --import –a /tmp/tan_publickey`
 
 To check that the public key has been imported, as user wong, run the following command to list out the public key for JohnTan  
 `gpg --list-keys`
 
-(vii)	Create the file /tmp/file_for_tan using any editor.
+(vii) Create the file /tmp/file_for_tan using any editor.
 
-(viii)	Encrypt the file /tmp/file_for_tan with tan’s public key. The encrypted output is sent to the file /tmp/encrypted_file_for_tan  
+(viii) Encrypt the file /tmp/file_for_tan with tan’s public key. The encrypted output is sent to the file /tmp/encrypted_file_for_tan  
 `gpg –-recipient JohnTan –a –o /tmp/encrypted_file_for_tan –e /tmp/file_for_tan`
 
 To check that the file has been encrypted properly, as user tan, run the following command to decrypt the file  
@@ -533,67 +532,63 @@ To check that the file has been encrypted properly, as user tan, run the followi
 
 	
 
-9.	Mail Service  
-(i)	To install postfix (if it is not installed yet) and make it start automatically upon next bootup  
+## 9. Mail Service  
+(i) To install postfix (if it is not installed yet) and make it start automatically upon next bootup  
 `yum install postfix`  
 `chkconfig postfix on`  
 
-(ii)	Make postfix listen on all network interfaces. Edit /etc/postfix/main.cf and change the inet_interfaces parameter:  
+(ii) Make postfix listen on all network interfaces. Edit /etc/postfix/main.cf and change the inet_interfaces parameter:  
 `inet_interfaces = all`
 
-(iii)	To relay emails from clients in the 192.168.0.0/16 subnet, edit /etc/postfix/main.cf and change the mynetworks parameter:  
+(iii) To relay emails from clients in the 192.168.0.0/16 subnet, edit /etc/postfix/main.cf and change the mynetworks parameter:  
 `mynetworks = 192.168.0.0/16`
 
-(iv)	To receive emails for the domain, edit /etc/postfix/main.cf and change the mydestination parameter:  
+(iv) To receive emails for the domain, edit /etc/postfix/main.cf and change the mydestination parameter:  
 `mydestination = singpoly.sg`
 
-(v)	To create a mail alias, edit /etc/aliases and add the following line:  
+(v) To create a mail alias, edit /etc/aliases and add the following line:  
 `register:     tan`
 
-(vi)	After making changes to the mail configuration, restart the service :  
+(vi) After making changes to the mail configuration, restart the service :  
 `service postfix restart`
 
 
 
-10.	System Logging  
-(i)	Edit /etc/rsyslog.conf and add the following lines (some lines may already exist):  
+## 10. System Logging  
+(i) Edit /etc/rsyslog.conf and add the following lines (some lines may already exist):  
 `authpriv.*		/var/log/secure`  
 `authpriv.error	/var/log/secureerr`  
 `*.error			@192.168.9.9`
 
-(ii)	Restart the rsyslog service  
+(ii) Restart the rsyslog service  
 `service rsyslog restart`
 
 
 
-11.	Web Service  
-(i)	To install the Web Service and make it start automatically upon next bootup :  
+## 11. Web Service  
+(i) To install the Web Service and make it start automatically upon next bootup :  
 `yum install httpd`  
 `chkconfig httpd on`  
 
-(ii)	Check the value of DocumentRoot in /etc/httpd/conf/httpd.conf, This will be the directory where the Apache Web Server will look for the web pages. By default it is set to /var/www/html  
+(ii) Check the value of DocumentRoot in /etc/httpd/conf/httpd.conf, This will be the directory where the Apache Web Server will look for the web pages. By default it is set to /var/www/html  
 `DocumentRoot /var/www/html`
 
-(iii)	To create index.html, create and edit the file  /var/www/html/index.html, and add the following line:  
+(iii) To create index.html, create and edit the file  /var/www/html/index.html, and add the following line:  
 `This is my school.`
 
-(iv)	Start the Web service now:  
+(iv) Start the Web service now:  
 `service httpd start`
 
-
-
-
-
-12.	Samba Service
-(i)	To install the Samba Service and make it start automatically upon next bootup :  
+## 12. Samba Service
+(i) To install the Samba Service and make it start automatically upon next bootup :  
 `yum install samba`  
 `chkconfig smb on`  
 
-(ii)	Create the directory /mysamba and set the SELinux file context:  
+(ii) Create the directory /mysamba and set the SELinux file context:  
 `mkdir /mysamba`
 `chcon –Rt samba_share_t /mysamba`  
 
-(iii)	Edit /etc/samba/smb.conf and add the following lines:  
+(iii) Edit /etc/samba/smb.conf and add the following lines:  
 `[myfiles]`  
 `path=/mysamba`  
 `read only = yes`  
@@ -601,24 +596,24 @@ To check that the file has been encrypted properly, as user tan, run the followi
 
 
 
-13.	 Firewall
+## 13. Firewall
 
 Note : You can also use the GUI to set the firewall. Make sure you are configuring permanent rules!
 
-(i)Check that the firewall will be activated (enabled) upon bootup  
+(i) Check that the firewall will be activated (enabled) upon bootup  
 `systemctl status firewalld`
 
-(ii)Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to Web Server in the default public zone  
+(ii) Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to Web Server in the default public zone  
 `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 port port=80 protocol=tcp source address=192.168.0.0/16 accept'`
 
-(iii)Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to Telnet Server in the default public zone  
+(iii) Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to Telnet Server in the default public zone  
 `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 port port=23 protocol=tcp source address=192.168.0.0/16 accept'`
 
-(iv)Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to SMTP Server in the default public zone  
+(iv) Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to SMTP Server in the default public zone  
 `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 port port=25 protocol=tcp source address=192.168.0.0/16 accept'`
 
-(v)Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to Samba Server in the default public zone  
+(v) Add rich rule to firewall to allow incoming traffic from 192.168.0.0/16 to Samba Server in the default public zone  
 `firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 port port=445 protocol=tcp source address=192.168.0.0/16 accept'`
 
-(vi)Check the config file if there are any other services already allowed and remove them.  
+(vi) Check the config file if there are any other services already allowed and remove them.  
 cat /etc/firewalld/zones/public.xml
