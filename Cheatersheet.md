@@ -461,6 +461,53 @@ Edit /etc/rsyslog.conf
 ### Webalizer for Apache (Section 6)
 Doesn't seem too important, refer to tutorial for more info.
 
+### Swatchdog for Log Monitoring (Section 7)
+Doesn't seem too important, refer to tutorial for more info.
+
+### Finding files based on specific criteria (Section 8)
+Doesn't seem too important, refer to tutorial for more info.
+
+### Listing open files
+`lsof +D /tmp` to list open files in the /tmp directory  
+`lsof -ni` to list files opened by network-related processes
+
+### Using AIDE
+AIDE is a file integrity checking software  
+`yum install aide` to install AIDE  
+`/etc/aide.conf` Configuration file
+
+`aide --init --config /etc/aide.conf` Create baseline database, may take awhile  
+`mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz` Rename to use it  
+`aide --check --config /etc/aide.conf` To run a check and compare with the baseline database.
+
+### Getting usage statistics
+`df -T` and `df -Th` for disk space utilization  
+`du -sh /home/*` to see how big each user's home directory is  
+
+To see CPU and Disk Utilization:  
+`iostat` 
+`iostat -N` For logical volume disk utilization  
+`iostat -m` To view in MB instead of KB
+
+To see virtual memory stats:  
+`free -m`  
+`vmstat`  
+`vmstat -s`
+
+Summary of CPU activity:  
+`sar`  
+`sar -f /var/log/sa/filename | less` To view log files, log files are created daily  
+`sar -n DEV` to view network statistics
+
+### Settings Process Limits (Section 12)
+**Could be important refer to slides for best answer**
+
+### Process Accounting
+`yum install psacct` Install the psacct package  
+
+`ac -dp` to view daily connect times for each user  
+`lastcomm <username>` to view information about the most recent commands run by the selected user
+
 # Mock Test Paper for Reference
 Suggested solutions for SLIN Revision Questions for End of Semester Practical Test
 
