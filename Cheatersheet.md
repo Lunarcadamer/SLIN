@@ -275,3 +275,21 @@ writable = yes`
 
 Turn on SELinux Booleans to allow access to home directories  
 `setsebool -P samba_enable_home_dirs on`
+
+## Topic 6 (Securing Data)
+
+### Random Number Generation
+`hexdump /dev/random` Move mouse to generate random bytes  
+`hexdump /dev/urandom` No need to move mouse, but not truly random
+
+`openssl rand -base64 8` Using OpenSSL to generate 8 random bytes in Base64  
+`openssl rand 8` 8 random bytes, but not necessarily printable
+
+### One Way Hashes
+`md5sum <file> > <outputFile>` Creating a file with the md5 fingerprint of another file
+
+### Working with multiple fingerprints
+`sha1sum /etc/pam.d/* > /root/pam_sign.sha1` Creating SHA1 fingerprints of all files in /etc/pam.d  
+`sha1sum --check /root/pam_sign.sha1` To compare the signatures to see if there was any modification
+
+### Symmetric Encryption
