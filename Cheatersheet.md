@@ -370,3 +370,32 @@ Use the CA private key to sign the CSR, passphrase for the key will be required
 Edit /etc/httpd/conf.d/ssl.conf, modify these lines if they are different  
 `SSLCertificateFile /etc/pki/tls/certs/httpd.crt`  
 `SSLCertificateKeyFile /etc/pki/tls/private/httpd.key`
+
+Restart the Apache webserver
+
+### SSH with key-based authentication (Section 10)
+**On Client**  
+As user student, generate a pair of private/public RSA keys for SSH. Accept the default values and set a passphrase.  
+`ssh-keygen -t rsa` 
+Create the directory /home/student/.ssh  
+`chmod 700 .ssh`
+
+Copy the public key from the client to the server /home/student/.ssh/authorized_keys  
+`scp /home/student/.ssh/id_rsa.pub serverIP:/home/student/.ssh/authorized_keys`
+
+As user student, ensure file /home/student/.ssh/authorized_keys is only accessible by the owner  
+`chmod 600 authorized_keys`
+
+### SSH Agent (Section 11)
+**On Client**  
+As user student, start SSH Agent  
+`eval $(ssh-agent -s)`
+
+Load keys to the SSH agent. (this step not necessary if user student already logged in at GUI)  
+`ssh-add`
+
+`ssh <serverIP>` Now no passphrase has to be entered.
+
+### Virtual Network Computing through SSH Tunnel (Section 12)
+
+### Using SSH Tunnel to do Local Port Forwarding (Section 13)
