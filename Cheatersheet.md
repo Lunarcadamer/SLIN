@@ -511,11 +511,11 @@ Summary of CPU activity:
 **Short Tutorial**  
 **Best to refer to tutorial for more details**
 
-## Topic 9
+## Topic 9 (E-Mail)
 **Short Tutorial**  
 **Best to refer to tutorial for more details**
 
-## Topic 10
+## Topic 10 (User Authentication)
 **Short Tutorial**  
 **Best to refer to tutorial for more details**
 
