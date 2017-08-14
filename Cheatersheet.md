@@ -198,3 +198,80 @@ Check the contents of /mount/data to see if the server’s exported directory ha
 
 ### Firewall files
 `/etc/firewalld/zones/public.xml`  
+
+## Topic 5 (Samba)
+
+### Creating Samba Share
+`yum install samba` Install Samba
+`yum install samba-client` Install Samba Client
+
+`systemctl start smb` Start Samba service
+`systemctl enable smb` Enable Samba service
+
+Samba configuration in /etc/samba/smb.conf
+Adding a samba share called "myshare"
+`[myshare]
+comment = My Samba Share
+path = /samba_share (replace with folder to share)
+guest ok = yes/no
+browsable = yes/no`
+
+`smbpasswd -a alvin` Set password for user "alvin"
+
+### Browsing Samba Shares from Client
+`smbclient -L <serverIP>` View Samba shares on the server
+
+### Accessing anonymous Samba Shares from Client
+`smbclient //<serverIP>/<Samba Share Name>`
+`smbclient //192.168.137.69/myshare` Example
+
+Use `help` command to view avaliable commands
+
+If there is an error when using `ls`, it could be due to SELinux settings.
+`setenforce 0` Turn off SELinux on server and retry the command
+`chcon -Rt samba_share_t /samba_share` If its due to SELinux, change the shared directory context
+`setenforce 1` Turn on SELinux when done
+
+`get <filename>` Download shared file
+
+`quit` to exit from Samba client
+
+### Authenticating Users to access Samba Shares
+Edit /etc/samba/smb.conf and remove "guest ok = yes"
+
+`smbclient //<serverIP>/<sharedFolder> -U <username>` Logging in as a user, enter password when prompted
+
+### Uploading files to Samba Share
+`put <filename>` to upload files to the Samba Share, by default not allowed
+
+Edit /etc/samba/smb.conf
+`write list = <username>` Add this line to specify which users can write to the Samba share
+
+From Windows System, go to Start, Run.
+`\\<serverIP>\<sharedFolder>` into the Run window, a login prompt should appear
+
+### Mounting Samba Share automatically upon bootup
+`yum install cifs-utils` Common Internet File System (CIFS) for mounting
+`mkdir /sambadata` Create a mount point, in this case "/sambadata"
+
+Edit /etc/fstab
+`//<serverIP>/<sharedFolder>    /<mountPoint>   cifs    credentials=/etc/sambauser 0 0`
+`//serverIP/myshare             /sambadata      cifs    credentials=/etc/sambauser 0 0` Example
+
+Create a new file /etc/sambauser
+Add login credentials
+`user=alvin
+pass=alvinpassword`
+
+Secure the credential files
+`chmod 600 /etc/sambauser`
+
+### Accessing Home Directories through Samba
+Edit /etc/samba/smb.conf
+`[homes]
+comment = Home Directories
+browsable = no
+writable = yes`
+
+Turn on SELinux Booleans to allow access to home directories
+`setsebool -P samba_enable_home_dirs on`
