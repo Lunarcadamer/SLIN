@@ -447,7 +447,6 @@ Edit /etc/rsyslog.conf to add the following line in bold under the authpriv line
 `authpriv.*	/var/log/secure`  
 `authpriv.warning	/var/log/securewarning`
 
-
 ### Remote Logging (Section 4)
 Doesn't seem too important, refer to tutorial for more info.
 **On Client**  
@@ -500,13 +499,25 @@ Summary of CPU activity:
 `sar -n DEV` to view network statistics
 
 ### Settings Process Limits (Section 12)
-**Could be important refer to slides for best answer**
+**Could be important refer to tutorial for best answer**
 
 ### Process Accounting
 `yum install psacct` Install the psacct package  
 
 `ac -dp` to view daily connect times for each user  
 `lastcomm <username>` to view information about the most recent commands run by the selected user
+
+## Topic 8 (Domain Name System)
+**Short Tutorial**  
+**Best to refer to tutorial for more details**
+
+## Topic 9
+**Short Tutorial**  
+**Best to refer to tutorial for more details**
+
+## Topic 10
+**Short Tutorial**  
+**Best to refer to tutorial for more details**
 
 # Mock Test Paper for Reference
 Suggested solutions for SLIN Revision Questions for End of Semester Practical Test
