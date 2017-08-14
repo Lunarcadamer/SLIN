@@ -428,7 +428,9 @@ Refer to tutorial 6, section 13
 
 ## Topic 7 (System Monitoring)
 
-## Mock Test Paper for Reference
+
+
+# Mock Test Paper for Reference
 Suggested solutions for SLIN Revision Questions for End of Semester Practical Test
 
 **Important : Know how to access the various man pages for more help. Apache web server has its Apache manual website that can be installed.**
