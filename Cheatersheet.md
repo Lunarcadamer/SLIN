@@ -437,60 +437,60 @@ Important : Know how to access the various man pages for more help. Apache web s
 2.	
 Alternatively, edit the network config file /etc/sysconfig/network-scripts/ifcfg-eno16777736 and specify the BOOTPROTO, IPADDR, NETMASK, GATEWAY and DNS1.
 
-You may need to restart the network for changes to take effect
-systemctl status network
+You may need to restart the network for changes to take effect  
+`systemctl status network`
 
 
 3.	To create users and set their passwords
 
-useradd tan
-useradd wong
-useradd lee
-passwd tan (set the password to "password")
-passwd wong
-passwd lee
+`useradd tan`  
+`useradd wong`  
+`useradd lee`  
+`passwd tan (set the password to "password")`  
+`passwd wong`  
+`passwd lee`  
 
 
-4.	Groups
-(i)	To create group
-groupadd staff
+4.	Groups  
+(i)	To create group  
+`groupadd staff`
 
-(ii)	To add users as secondary members of a group
-usermod -aG staff tan
-usermod -aG staff wong
-
-
-5.	SELinux
-Edit /etc/selinux/config and set the following :
-SELINUX=enforcing
+(ii)	To add users as secondary members of a group  
+`usermod -aG staff tan`  
+`usermod -aG staff wong`  
 
 
-
-6.	Telnet Service
-(i)	Install xinetd and telnet-server and make xinetd start automatically upon next bootup
-yum install xinetd
-yum install telnet-server	not yum install telnet (this is telnet client)
-chkconfig xinetd on
-
-(ii)	Enable telnet-server to be started when there is a client request:
-chkconfig telnet on
-
-(iii)	To configure telnet service to be available only to certain clients, edit /etc/xinetd.d/telnet and add in the following line:
-only_from   = 192.168.0.0/16
-
-(iv)	To start xinetd now:
-service xinetd start
+5.	SELinux  
+Edit /etc/selinux/config and set the following :  
+`SELINUX=enforcing`  
 
 
-7.	Symmetric Encryption
+
+6.	Telnet Service  
+(i)	Install xinetd and telnet-server and make xinetd start automatically upon next bootup  
+`yum install xinetd`  
+`yum install telnet-server`	not yum install telnet (this is telnet client)  
+`chkconfig xinetd on`  
+
+(ii)	Enable telnet-server to be started when there is a client request:  
+`chkconfig telnet on`
+
+(iii)	To configure telnet service to be available only to certain clients, edit /etc/xinetd.d/telnet and add in the following line:  
+`only_from   = 192.168.0.0/16`
+
+(iv)	To start xinetd now:  
+`service xinetd start`
+
+
+7.	Symmetric Encryption  
 (i)	Create the file /tmp/myfile using any editor
 
 (ii)	Encrypt the file /tmp/myfile with Triple-DES, using “hello” as the encryption key and store the encrypted output to /tmp/encrypted
-openssl des3 –in /tmp/myfile –out /tmp/encrypted 
+`openssl des3 –in /tmp/myfile –out /tmp/encrypted`  
 (Enter “hello” when asked for encrypted password)
 
 (iii)	Decrypt the file /tmp/encrypted with Triple-DES, using “hello” as the encryption key and store the decrypted output to /tmp/decrypted
-openssl des3 –d –in /tmp/encrypted –out /tmp/decrypted 
+`openssl des3 –d –in /tmp/encrypted –out /tmp/decrypted`  
 (Enter “hello” when asked for encrypted password)
 
 (iv)	Check that /tmp/decrypted contains the original string “Good morning to all!”
@@ -498,13 +498,13 @@ openssl des3 –d –in /tmp/encrypted –out /tmp/decrypted
 
 
 8.	Asymmetric Encryption
-(i)	As user tan, do the following to generate a pair of private and public keys :
-Login to the GUI as user tan.
-gpg --gen-key (choose the default options and enter “JohnTan” as the Real name.
+(i)	As user tan, do the following to generate a pair of private and public keys :  
+Login to the GUI as user tan.  
+`gpg --gen-key (choose the default options and enter “JohnTan” as the Real name.`
 
-To check that the keys have been created, run the following commands to list out the private and public key for JohnTan
-gpg --list-secret-keys
-gpg --list-keys
+To check that the keys have been created, run the following commands to list out the private and public key for JohnTan  
+`gpg --list-secret-keys`  
+`gpg --list-keys`  
 
 (ii)	Create the file /home/tan/tanfile using any editor.
 
