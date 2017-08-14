@@ -293,3 +293,80 @@ Turn on SELinux Booleans to allow access to home directories
 `sha1sum --check /root/pam_sign.sha1` To compare the signatures to see if there was any modification
 
 ### Symmetric Encryption
+`openssl des3 -base64 -in <plaintextFile> -out <encryptedFile>` Using Triple-DES to encrypt a file, there will be a prompt for a password  
+`openssl des3 -d -base64 -in <encryptedFile>` Decrypting file, provide the correct password to decrypt
+
+### Asymmetric Encryption
+**IMPORTANT: Login at the GUI as the users to generate the keys, don't just `su`**  
+`gpg --gen-key` to generate keys  
+`gpg --list-keys` to view public keys  
+`gpg --list-secret-keys` to view private keys  
+
+`gpg -a --export AliceLim > /tmp/alice_pubkey` Exporting public key of AliceLim  
+`gpg --import /tmp/alice_pubkey` Importing Alice's public key
+
+`gpg --recipient AliceLim -a -o /tmp/ciphertext -e /tmp/plaintext` Encrypting a message for Alice  
+`gpg -o alicetext -a -d /tmp/ciphertext` Decrypting the message, remember to login as Alice
+
+### Digital Signatures (Section 6)
+`gpg --recipient BobTan -a --sign -o /tmp/signcipher -e alicetext` Encrypting alicetext and signing it with alice's private key  
+`gpg -o bobtext -a -d /tmp/signcipher` Decrypting and verifying "signcipher" file
+
+### Creating a self-sign cert for Apache web server
+Start the Apache web server 'systemctl start httpd'
+
+As root, go to /etc/pki/tls/certs  
+`make httpd.key` to generate a private key for Apache  
+`make httpd.crt` to generate a self-signed certificate
+
+`mv /etc/pki/tls/certs/httpd.key /etc/pki/tls/private` Moving the private key to the private directory
+
+`yum install mod_ssl` Install the SSL module for Apache if not yet installed
+
+Edit /etc/httpd/conf.d/ssl.conf
+`SSLCertificateFile /etc/pki/tls/certs/httpd.crt`  
+`SSLCertificateKeyFile /etc/pki/tls/private/httpd.key`
+
+Restart once modified
+
+### Setting up a private Certificate Authority (Section 8)
+Check for directories /etc/pki/CA/private (Stores private key of CA) and /etc/pki/CA/certs (stores certs)  
+Create them if they do not exist
+
+`chmod 700 /etc/pki/CA/private` Ensure the directory is accessible only to root
+
+Edit /etc/pki/tls/openssl.cnf, add the following lines:  
+`dir = /etc/pki/CA`  
+`certificate = $dir/certs/slin-ca.crt`  
+`private_key = $dir/private/slin-ca.key`
+
+Create two files to be used by the private CA  
+`touch /etc/pki/CA/index.txt`  
+`echo 01 > /etc/pki/CA/serial`
+
+Generate a 2048-bit private for the private CA, besure to be in /etc/pki/CA  
+`openssl genrsa -des3 2048 > private/slin-ca.key`  
+`chmod 600 /etc/pki/CA/private/slin-ca.key` Ensure private key is only accessible by root  
+Run the following command to generate a self-signed cert for the private CA  
+`openssl req -new -x509 -days 365 -key private/slin-ca.key > certs/slin-ca.crt`
+
+`ls /etc/pki/CA/certs` to check that the cert is created
+
+Copy the cert to the webserver  
+`mkdir /var/www/html/pub` 
+`cp /etc/pki/CA/certs/slin-ca.crt /var/www/html/pub`
+
+### Sign Apache Web Server Certificate using private CA (Section 9)
+Change directory to /etc/pki/tls
+
+Generate new private key for webserver  
+`openssl genrsa 1024 > private/httpd.key` Remember the passphrase  
+`chmod 600 private/httpd.key`  
+`openssl req -new -key private/httpd.key -out certs/httpd.csr` Generate the certificate signing request
+
+Use the CA private key to sign the CSR, passphrase for the key will be required
+`openssl ca -in certs/httpd.csr -out certs/httpd.cert`
+
+Edit /etc/httpd/conf.d/ssl.conf, modify these lines if they are different  
+`SSLCertificateFile /etc/pki/tls/certs/httpd.crt`  
+`SSLCertificateKeyFile /etc/pki/tls/private/httpd.key`
