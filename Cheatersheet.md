@@ -210,10 +210,10 @@ Check the contents of /mount/data to see if the server’s exported directory ha
 
 Samba configuration in /etc/samba/smb.conf  
 Adding a samba share called "myshare"
-`[myshare]
-comment = My Samba Share
-path = /samba_share (replace with folder to share)
-guest ok = yes/no
+`[myshare]  
+comment = My Samba Share  
+path = /samba_share (replace with folder to share)  
+guest ok = yes/no  
 browsable = yes/no`
 
 `smbpasswd -a alvin` Set password for user "alvin"
@@ -260,7 +260,7 @@ Edit /etc/fstab
 
 Create a new file /etc/sambauser  
 Add login credentials  
-`user=alvin
+`user=alvin  
 pass=alvinpassword`
 
 Secure the credential files  
@@ -268,9 +268,9 @@ Secure the credential files
 
 ### Accessing Home Directories through Samba
 Edit /etc/samba/smb.conf  
-`[homes]
-comment = Home Directories
-browsable = no
+`[homes]  
+comment = Home Directories  
+browsable = no  
 writable = yes`
 
 Turn on SELinux Booleans to allow access to home directories  
