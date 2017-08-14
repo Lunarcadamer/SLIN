@@ -397,5 +397,29 @@ Load keys to the SSH agent. (this step not necessary if user student already log
 `ssh <serverIP>` Now no passphrase has to be entered.
 
 ### Virtual Network Computing through SSH Tunnel (Section 12)
+`yum install vnc-server` to install the VNC server
+
+Make a copy of the vncserver config file (run the command in a single line).  
+`cp /lib/systemd/system/vncserver@.service  /etc/systemd/system/vncserver@.service`
+
+Edit /etc/systemd/system/vncserver@.service and modify the following line to replace <USER> with student to connect.  
+`ExecStart=/sbin/runuser -l <USER> -c "/usr/bin/vncserver %i" PIDFile=/home/<USER>/.vnc/%H%i.pid`
+
+Set VNC password
+`vncpasswd`
+
+Restart the service  
+`systemctl daemon-reload`  
+`systemctl start vncserver@:1`  
+
+`netstat -tunap` To check for a listening port in the range of 5900 to 5905.  
+Remember to adjust the firewall to allow connections to the VNC Server
+
+**On Client**  
+`yum install vnc`  
+`vncviewer <serverIP>:1`  
+
+To use SSH  
+`vncviewer -via <serverIP> localhost:1`
 
 ### Using SSH Tunnel to do Local Port Forwarding (Section 13)
