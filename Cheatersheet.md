@@ -423,3 +423,5 @@ To use SSH
 `vncviewer -via <serverIP> localhost:1`
 
 ### Using SSH Tunnel to do Local Port Forwarding (Section 13)
+
+Refer to tutorial 6, section 13
